@@ -34,12 +34,13 @@
   },
   "homepage": "https://github.com/teddy-gustiaux/youtube-rss-finder#readme",
   "devDependencies": {
-    "eslint": "^5.0.1",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-prettier": "^2.6.1",
     "mocha": "^5.2.0",
-    "prettier": "^1.13.7"
+    "prettier": "^1.13.7",
+    "web-ext": "^2.7.0"
   }
 }
