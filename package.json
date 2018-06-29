@@ -1,0 +1,45 @@
+{
+  "private": true,
+  "name": "youtube-rss-finder",
+  "version": "1.0.0",
+  "description": "Helps you find the RSS feed of a YouTube channel.",
+  "main": "background.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha",
+    "lint": "./node_modules/.bin/eslint --config .eslintrc.json",
+    "lint:src": "./node_modules/.bin/eslint --config .eslintrc.json src/**/*.js; exit 0",
+    "lint:test": "./node_modules/.bin/eslint --config .eslintrc.json test/**/*.js; exit 0",
+    "lint:all": "./node_modules/.bin/eslint --config .eslintrc.json **/*.js; exit 0",
+    "fix": "./node_modules/.bin/eslint --config .eslintrc.json --fix",
+    "fix:src": "./node_modules/.bin/eslint --config .eslintrc.json src/**/*.js --fix; exit 0",
+    "fix:test": "./node_modules/.bin/eslint --config .eslintrc.json test/**/*.js --fix; exit 0",
+    "fix:all": "./node_modules/.bin/eslint --config .eslintrc.json **/*.js --fix; exit 0",
+    "fix:dry": "./node_modules/.bin/eslint --config .eslintrc.json --fix-dry-run",
+    "firefox": "web-ext run --source-dir ./src/ --firefox=firefox --firefox-profile=dev --start-url about:debugging",
+    "firefox:dev": "web-ext run --source-dir ./src/ --firefox=firefoxdeveloperedition --firefox-profile=dev --start-url about:debugging",
+    "firefox:nightly": "web-ext run --source-dir ./src/ --firefox=nightly --firefox-profile=nightly --start-url about:debugging",
+    "build:firefox": " web-ext build --source-dir ./src/ --overwrite-dest --artifacts-dir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teddy-gustiaux/youtube-rss-finder.git"
+  },
+  "author": "Teddy Gustiaux",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/teddy-gustiaux/youtube-rss-finder/issues"
+  },
+  "homepage": "https://github.com/teddy-gustiaux/youtube-rss-finder#readme",
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-prettier": "^2.6.1",
+    "mocha": "^5.2.0",
+    "prettier": "^1.13.7"
+  }
+}
