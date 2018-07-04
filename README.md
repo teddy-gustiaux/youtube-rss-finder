@@ -13,7 +13,7 @@ Ever tried to find the RSS feed of a YouTube channel? It can be painful.
 
 This add-on automatically finds the RSS feed of any YouTube channel for you. It works anywhere on a channel, even when you are watching a video!
 
-When a channel RSS feed is found, the add-on will display its icon in the address bar. Simply click on it and it the RSS feed will be opened in a new tab!
+When a channel RSS feed is found, the add-on will display its icon in the address bar. Simply click on it and the RSS feed will be opened in a new tab!
 
 *Page action icon:*
 
