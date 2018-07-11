@@ -7,6 +7,11 @@
 
 **WebExtension helping you find the RSS feed of a YouTube channel.**
 
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/youtube-rss-finder/">
+<img border="0" src="https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png" width="172" height="60">
+</a>
+
 ### Features
 
 Ever tried to find the RSS feed of a YouTube channel? It can be painful.
