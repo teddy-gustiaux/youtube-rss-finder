@@ -18,14 +18,28 @@ function onError(error) {
     console.log(`Error: ${error}`);
 }
 
+function getIdentifier(url, splitter) {
+    return url.split(splitter)[1].split('/')[0];
+}
+
 function getFeed(url) {
     let channel;
+    let id;
     if (url.split('channel/')[1]) {
-        channel = `channel_id=${url.split('channel/')[1].split('/')[0]}`;
+        id = getIdentifier(url, 'channel/')
+        if (id) channel = `channel_id=${id}`;
+    } else if(url.split('user/')[1]) {
+        id = getIdentifier(url, 'user/')
+        if (id) channel = `user=${id}`;
     } else {
-        channel = `user=${url.split('user/')[1].split('/')[0]}`;
+        id = getIdentifier(url, 'youtube.com/')
+        if (id) channel = `user=${id}`;
     }
-    return FEED_BASE_URL + channel;
+    if (channel) {
+        return FEED_BASE_URL + channel;
+    } else {
+        return null;
+    }
 }
 
 async function displayFeed(tabs) {
@@ -42,10 +56,12 @@ async function displayFeed(tabs) {
         } else {
             feed = getFeed(currentURL);
         }
-        browser.tabs.create({
-            url: feed,
-            active: true,
-        });
+        if (feed !== null) {
+            browser.tabs.create({
+                url: feed,
+                active: true,
+            });
+        }
     }
 }
 

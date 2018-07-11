@@ -32,7 +32,8 @@
     "show_matches": [
       "https://www.youtube.com/channel/*",
       "https://www.youtube.com/user/*",
-      "https://www.youtube.com/watch*"
+      "https://www.youtube.com/watch*",
+      "https://www.youtube.com/*"
     ]
   },
 
