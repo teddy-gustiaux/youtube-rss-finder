@@ -7,7 +7,6 @@
 const CONTENT_SCRIPT = '/content-script.js';
 const FEED_BASE_URL = 'https://www.youtube.com/feeds/videos.xml?';
 const YOUTUBE_VIDEO_WATCHING = 'https://www.youtube.com/watch?';
-let globalFeed = null;
 
 /*
  * =================================================================================================
@@ -16,43 +15,9 @@ let globalFeed = null;
  */
 
 /**
- * A class to manipulate the page action.
- */
-class PageAction {
-    /**
-     * Hide completely the page action.
-     * @param {integer} tabId The ID of the tab for which to hide the page action
-     */
-    static hide(tabId) {
-        browser.pageAction.hide(tabId);
-    }
-
-    /**
-     * Show the page action.
-     * @param {integer} tabId The ID of the tab for which to show the page action
-     */
-    static show(tabId) {
-        browser.pageAction.show(tabId);
-    }
-}
-
-/**
  * A class containing various utility functions.
  */
 class Utils {
-    /**
-     * Get the current tab information.
-     * @returns {(Tab|null)} The information of the tab or `null` in case of error
-     * @see {@link https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab `Tab` type definition}
-     */
-    static async getActiveTab() {
-        const tabs = await browser.tabs.query({ active: true, currentWindow: true });
-        if (typeof tabs !== 'undefined' && tabs.length > 0) {
-            return tabs[0];
-        }
-        return null;
-    }
-
     /**
      * Check if the provided URL is valid (HTTP-based URL).
      * @param {string} urlString The URL to check
@@ -134,35 +99,17 @@ async function getFeedFromDOM() {
  * @see {@link https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab `Tab` type definition}
  */
 async function onPageActionClick(tab) {
-    if (Utils.isVideoWatchingURL(tab.url)) globalFeed = await getFeedFromDOM();
-    if (Utils.isValidURL(globalFeed)) {
+    let feed = null;
+    if (Utils.isVideoWatchingURL(tab.url)) {
+        feed = await getFeedFromDOM();
+    } else {
+        feed = await Utils.buildChannelFeed(tab.url);
+    }
+    if (Utils.isValidURL(feed)) {
         browser.tabs.create({
-            url: globalFeed,
+            url: feed,
             active: true,
         });
-    }
-}
-
-/**
- * Callback function executed when the tab is updated, or when changing window or tab.
- * Hide the icon in case of error, or show it if a video is being watched.
- * If the user is elsewhere on YouTube, try to retrieve the RSS feed from the current URL
- * and display the icon accordingly.
- */
-async function processUpdate() {
-    const activeTab = await Utils.getActiveTab();
-    if (activeTab === null) {
-        PageAction.hide(activeTab.id);
-    } else if (Utils.isVideoWatchingURL(activeTab.url)) {
-        PageAction.show(activeTab.id);
-    } else {
-        // Try to retrieve the RSS feed from the current URL
-        globalFeed = await Utils.buildChannelFeed(activeTab.url);
-        if (globalFeed !== null) {
-            PageAction.show(activeTab.id);
-        } else {
-            PageAction.hide(activeTab.id);
-        }
     }
 }
 
@@ -173,24 +120,7 @@ async function processUpdate() {
  */
 
 // -------------------------------------------------------------------------------------------------
-// TABS
-// -------------------------------------------------------------------------------------------------
-// Listen to tab URL changes (if version supports it, limit to necessary events)
-browser.tabs.onUpdated.addListener(processUpdate, {
-    urls: ['https://youtube.com/*'],
-    properties: ['status'],
-});
-// Listen to tab activation and tab switching
-browser.tabs.onActivated.addListener(processUpdate);
-
-// -------------------------------------------------------------------------------------------------
-// WINDOWS
-// -------------------------------------------------------------------------------------------------
-// Listen for window activation and window switching
-browser.windows.onFocusChanged.addListener(processUpdate);
-
-// -------------------------------------------------------------------------------------------------
 // PAGE ACTION
 // -------------------------------------------------------------------------------------------------
-// Listen for clicks on the button
+// Listen for clicks on the page action (icon in the address bar)
 browser.pageAction.onClicked.addListener(onPageActionClick);
