@@ -1,14 +1,4 @@
 /**
- * List of selectors to retrieve the channel homepage address from the DOM.
- * Supports both new and old YouTube layouts.
- * @type {Array}
- */
-const CHANNEL_URL_SELECTORS = [
-    'yt-formatted-string#owner-name :first-child',
-    '.yt-user-info :first-child',
-];
-
-/**
  * Check if the provided input is nil (`null` or `undefined`)
  * @param {*} input The input to test
  * @returns {boolean} `true` if the input is nil, `false` otherwise
@@ -22,6 +12,16 @@ function isNil(input) {
  * @returns {(string|null)} The URL of the channel or `null` if not found
  */
 function findChannelAddress() {
+    /**
+     * List of selectors to retrieve the channel homepage address from the DOM.
+     * Supports both new and old YouTube layouts.
+     * Must be defined in the function body to avoid redeclaration issues.
+     * @type {Array}
+     */
+    const CHANNEL_URL_SELECTORS = [
+        'yt-formatted-string#owner-name :first-child',
+        '.yt-user-info :first-child',
+    ];
     let channelAddress = null;
     // eslint-disable-next-line
     for (let urlSelector of CHANNEL_URL_SELECTORS) {
