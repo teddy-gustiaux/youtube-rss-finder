@@ -6,102 +6,110 @@
 
 const CONTENT_SCRIPT = '/content-script.js';
 const FEED_BASE_URL = 'https://www.youtube.com/feeds/videos.xml?';
-const YOUTUBE_WATCH = 'https://www.youtube.com/watch?';
-let globalFeed = null;
+const YOUTUBE_VIDEO_WATCHING = 'https://www.youtube.com/watch?';
 
 /*
  * =================================================================================================
- * UTILITIES
+ * CLASSES
  * =================================================================================================
  */
 
-async function getActiveTab() {
-    const tabs = await browser.tabs.query({ active: true, currentWindow: true });
-    if (typeof tabs !== 'undefined' && tabs.length > 0) {
-        return tabs[0];
+/**
+ * A class containing various utility functions.
+ */
+class Utils {
+    /**
+     * Check if the provided URL is valid (HTTP-based URL).
+     * @param {string} urlString The URL to check
+     * @returns {boolean} `true` if the URL is supported, `false` otherwise
+     */
+    static isValidURL(urlString) {
+        const supportedProtocols = ['https:', 'http:'];
+        const url = new URL(urlString);
+        return supportedProtocols.indexOf(url.protocol) !== -1;
     }
-    return null;
-}
 
-function isValidURL(urlString) {
-    const supportedProtocols = ['https:', 'http:'];
-    const url = document.createElement('a');
-    url.href = urlString;
-    return supportedProtocols.indexOf(url.protocol) !== -1;
-}
-
-function isWatchURL(url) {
-    return url.substring(0, 30) === YOUTUBE_WATCH;
-}
-
-function getIdentifier(url, splitter) {
-    return url.split(splitter)[1].split('/')[0];
-}
-
-function buildFeedIdentifier(url, splitter, queryStringParameter) {
-    let channel;
-    if (url.split(splitter)[1]) {
-        const id = getIdentifier(url, splitter);
-        if (id && typeof id !== 'undefined') channel = `${queryStringParameter}=${id}`;
+    /**
+     * Check if the provided URL is corresponding to a video being watched on YouTube
+     * @param {string} url The URL to check
+     * @returns {boolean} `true` if the URL is one of a video being watched, `false` otherwise
+     */
+    static isVideoWatchingURL(url) {
+        return url.substring(0, 30) === YOUTUBE_VIDEO_WATCHING;
     }
-    return channel || null;
-}
 
-function buildFeed(url) {
-    let channel = null;
-    if (url.split('channel/')[1]) {
-        channel = buildFeedIdentifier(url, 'channel/', 'channel_id');
-    } else if (url.split('user/')[1]) {
-        channel = buildFeedIdentifier(url, 'user/', 'user');
-    } else if (url.split('/').length === 4) {
-        channel = buildFeedIdentifier(url, 'youtube.com/', 'user');
+    /**
+     * Build the channel RSS feed unique identifier.
+     * @param {string} url The YouTube channel URL
+     * @param {string} splitter Divider used to break down the channel URL
+     * @param {string} queryStringParameter The parameter to indicate the type of content to retrieve
+     * @returns {(string|null)} The identifier of the channel or `null` in case of error
+     */
+    static buildFeedIdentifier(url, splitter, queryStringParameter) {
+        let channel;
+        const test = url.split(splitter)[1];
+        if (test) {
+            const id = test.split('/')[0];
+            if (id && typeof id !== 'undefined') channel = `${queryStringParameter}=${id}`;
+        }
+        return channel || null;
     }
-    if (channel !== null) {
-        return FEED_BASE_URL + channel;
+
+    /**
+     * Build the URL of the RSS feed of a YouTube channel.
+     * @param {string} url The YouTube channel URL
+     * @returns {(string|null)} The URL of the channel RSS feed or `null` in case of error
+     */
+    static buildChannelFeed(url) {
+        let channel = null;
+        if (url.split('channel/')[1]) {
+            channel = Utils.buildFeedIdentifier(url, 'channel/', 'channel_id');
+        } else if (url.split('user/')[1]) {
+            channel = Utils.buildFeedIdentifier(url, 'user/', 'user');
+        } else if (url.split('/').length === 4) {
+            channel = Utils.buildFeedIdentifier(url, 'youtube.com/', 'user');
+        }
+        if (channel !== null) return FEED_BASE_URL + channel;
+        return null;
     }
-    return null;
 }
 
-async function getFeed(currentURL) {
-    return buildFeed(currentURL);
-}
+/*
+ * =================================================================================================
+ * EXTENSION LOGIC
+ * =================================================================================================
+ */
 
-async function getFeedForWatch() {
+/**
+ * Retrieve the RSS feed of the channel when watching a video of said channel.
+ * Executes content script to retrieve the channel URL from the DOM.
+ * @returns {(string|null)} The URL of the channel RSS feed or `null` in case of error
+ */
+async function getFeedFromDOM() {
     const result = await browser.tabs.executeScript({
         file: CONTENT_SCRIPT,
     });
-    return buildFeed(result[0]);
+    return Utils.buildChannelFeed(result[0]);
 }
 
-async function displayFeed(feed) {
-    if (isValidURL(feed)) {
+/**
+ * Callback function executed when the page action is clicked.
+ * Retrieves the YouTube channel RSS feed and opens it in a new tab.
+ * @param {Tab} tab The tab whose page action was clicked
+ * @see {@link https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab `Tab` type definition}
+ */
+async function onPageActionClick(tab) {
+    let feed = null;
+    if (Utils.isVideoWatchingURL(tab.url)) {
+        feed = await getFeedFromDOM();
+    } else {
+        feed = await Utils.buildChannelFeed(tab.url);
+    }
+    if (Utils.isValidURL(feed)) {
         browser.tabs.create({
             url: feed,
             active: true,
         });
-    }
-}
-
-async function onPageActionClick(tab) {
-    if (isWatchURL(tab.url)) {
-        globalFeed = await getFeedForWatch();
-    }
-    displayFeed(globalFeed);
-}
-
-async function processUpdate() {
-    const activeTab = await getActiveTab();
-    if (activeTab === null) {
-        browser.pageAction.hide(activeTab.id);
-    } else if (isWatchURL(activeTab.url)) {
-        browser.pageAction.show(activeTab.id);
-    } else {
-        globalFeed = await getFeed(activeTab.url);
-        if (globalFeed !== null) {
-            browser.pageAction.show(activeTab.id);
-        } else {
-            browser.pageAction.hide(activeTab.id);
-        }
     }
 }
 
@@ -112,24 +120,7 @@ async function processUpdate() {
  */
 
 // -------------------------------------------------------------------------------------------------
-// TABS
-// -------------------------------------------------------------------------------------------------
-// Listen to tab URL changes
-browser.tabs.onUpdated.addListener(processUpdate, {
-    urls: ['https://youtube.com/*'],
-    properties: ['status'],
-});
-// Listen to tab activation and tab switching
-browser.tabs.onActivated.addListener(processUpdate);
-
-// -------------------------------------------------------------------------------------------------
-// WINDOWS
-// -------------------------------------------------------------------------------------------------
-// Listen for window activation and window switching
-browser.windows.onFocusChanged.addListener(processUpdate);
-
-// -------------------------------------------------------------------------------------------------
 // PAGE ACTION
 // -------------------------------------------------------------------------------------------------
-// Listen for clicks on the button
+// Listen for clicks on the page action (icon in the address bar)
 browser.pageAction.onClicked.addListener(onPageActionClick);

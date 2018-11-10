@@ -1,15 +1,16 @@
-function notifyExtension() {
+/**
+ * Retrieve the YouTube channel URL from the DOM.
+ * @returns {(string|null)} The URL of the channel or `null` if not found
+ */
+function findChannelAddress() {
     const ELEMENT = 'yt-formatted-string';
     const ID = 'owner-name';
     const container = window.document.querySelector(`${ELEMENT}#${ID}`);
-    let url;
-    if (container !== undefined) {
-        url = container.firstChild.href;
-        if (url === undefined) url = '';
-    } else {
-        url = '';
+    if (container !== undefined && container.firstChild.href !== undefined) {
+        return container.firstChild.href;
     }
-    return url;
+    return null;
 }
 
-notifyExtension();
+// Notify the extension by returning the found URL
+findChannelAddress();
