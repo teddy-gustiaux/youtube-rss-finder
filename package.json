@@ -21,6 +21,7 @@
     "firefox": "web-ext run --source-dir ./src/ --firefox=firefox --firefox-profile=dev --start-url about:debugging",
     "firefox:dev": "web-ext run --source-dir ./src/ --firefox=firefoxdeveloperedition --firefox-profile=dev --start-url about:debugging",
     "firefox:nightly": "web-ext run --source-dir ./src/ --firefox=nightly --firefox-profile=nightly --start-url about:debugging",
+    "build:changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "build:firefox": "web-ext build --source-dir ./src/ --overwrite-dest --artifacts-dir ./dist"
   },
   "repository": {
@@ -34,6 +35,7 @@
   },
   "homepage": "https://github.com/teddy-gustiaux/youtube-rss-finder#readme",
   "devDependencies": {
+    "conventional-changelog-cli": "^2.0.11",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-prettier": "^3.1.0",
