@@ -39,11 +39,11 @@
     "conventional-changelog-cli": "^2.0.11",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.0.0",
-    "eslint-config-prettier": "^3.1.0",
+    "eslint-config-prettier": "^3.2.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-prettier": "^3.0.0",
     "mocha": "^5.2.0",
-    "prettier": "^1.13.7",
+    "prettier": "^1.15.2",
     "web-ext": "^2.7.0"
   }
 }
