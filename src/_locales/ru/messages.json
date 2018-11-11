@@ -1,5 +1,8 @@
 {
     "pageActionTitle": {
       "message": "Просмотреть RSS ленту этого канала"
+    },
+    "feedRetrievalError": {
+      "message": "The RSS feed of this channel could not be found."
     }
 }

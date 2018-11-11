@@ -50,7 +50,11 @@ class Utils {
         const test = url.split(splitter)[1];
         if (test) {
             const id = test.split('/')[0];
-            if (id && typeof id !== 'undefined') channel = `${queryStringParameter}=${id}`;
+            if (id && typeof id !== 'undefined') {
+                // Remove query string parameters
+                const sanitizedId = id.split('?')[0];
+                channel = `${queryStringParameter}=${sanitizedId}`;
+            }
         }
         return channel || null;
     }
@@ -61,15 +65,15 @@ class Utils {
      * @returns {(string|null)} The URL of the channel RSS feed or `null` in case of error
      */
     static buildChannelFeed(url) {
-        let channel = null;
+        let identifier = null;
         if (url.split('channel/')[1]) {
-            channel = Utils.buildFeedIdentifier(url, 'channel/', 'channel_id');
+            identifier = Utils.buildFeedIdentifier(url, 'channel/', 'channel_id');
         } else if (url.split('user/')[1]) {
-            channel = Utils.buildFeedIdentifier(url, 'user/', 'user');
+            identifier = Utils.buildFeedIdentifier(url, 'user/', 'user');
         } else if (url.split('/').length === 4) {
-            channel = Utils.buildFeedIdentifier(url, 'youtube.com/', 'user');
+            identifier = Utils.buildFeedIdentifier(url, 'youtube.com/', 'user');
         }
-        if (channel !== null) return FEED_BASE_URL + channel;
+        if (identifier !== null) return FEED_BASE_URL + identifier;
         return null;
     }
 }
@@ -109,6 +113,13 @@ async function onPageActionClick(tab) {
         browser.tabs.create({
             url: feed,
             active: true,
+        });
+    } else {
+        browser.notifications.create('', {
+            type: 'basic',
+            title: browser.runtime.getManifest().name,
+            message: browser.i18n.getMessage('feedRetrievalError'),
+            iconUrl: browser.extension.getURL('icons/error/error-96.png'),
         });
     }
 }

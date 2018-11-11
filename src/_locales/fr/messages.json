@@ -1,5 +1,8 @@
 {
     "pageActionTitle": {
-      "message": "Afficher le flux RSS de cette chaînes"
+      "message": "Afficher le flux RSS de cette chaîne"
+    },
+    "feedRetrievalError": {
+      "message": "Le flux RSS de cette chaîne n'a pas pu être trouvé."
     }
 }
