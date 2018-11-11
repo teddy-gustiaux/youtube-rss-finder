@@ -73,7 +73,6 @@ class Utils {
         } else if (url.split('/').length === 4) {
             identifier = Utils.buildFeedIdentifier(url, 'youtube.com/', 'user');
         }
-        console.log(identifier)
         if (identifier !== null) return FEED_BASE_URL + identifier;
         return null;
     }
@@ -114,6 +113,13 @@ async function onPageActionClick(tab) {
         browser.tabs.create({
             url: feed,
             active: true,
+        });
+    } else {
+        browser.notifications.create('', {
+            type: 'basic',
+            title: browser.runtime.getManifest().name,
+            message: browser.i18n.getMessage('feedRetrievalError'),
+            iconUrl: browser.extension.getURL('icons/error/error-96.png'),
         });
     }
 }

@@ -1,5 +1,8 @@
 {
     "pageActionTitle": {
       "message": "Display the RSS feed of this channel"
+    },
+    "feedRetrievalError": {
+      "message": "The RSS feed of this channel could not be found."
     }
 }

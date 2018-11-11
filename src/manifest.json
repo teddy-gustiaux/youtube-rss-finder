@@ -11,22 +11,23 @@
 
   "permissions": [
     "activeTab",
-    "tabs"
+    "tabs",
+    "notifications"
   ],
 
   "page_action": {
     "default_title": "__MSG_pageActionTitle__",
     "default_icon": {
-      "16": "icon/youtube-rss-finder-16.png",
-      "24": "icon/youtube-rss-finder-24.png",
-      "32": "icon/youtube-rss-finder-32.png",
-      "48": "icon/youtube-rss-finder-48.png",
-      "64": "icon/youtube-rss-finder-64.png",
-      "96": "icon/youtube-rss-finder-96.png",
-      "128": "icon/youtube-rss-finder-128.png",
-      "256": "icon/youtube-rss-finder-256.png",
-      "512": "icon/youtube-rss-finder-512.png",
-      "1024": "icon/youtube-rss-finder-1024.png"
+      "16": "icons/logo/youtube-rss-finder-16.png",
+      "24": "icons/logo/youtube-rss-finder-24.png",
+      "32": "icons/logo/youtube-rss-finder-32.png",
+      "48": "icons/logo/youtube-rss-finder-48.png",
+      "64": "icons/logo/youtube-rss-finder-64.png",
+      "96": "icons/logo/youtube-rss-finder-96.png",
+      "128": "icons/logo/youtube-rss-finder-128.png",
+      "256": "icons/logo/youtube-rss-finder-256.png",
+      "512": "icons/logo/youtube-rss-finder-512.png",
+      "1024": "icons/logo/youtube-rss-finder-1024.png"
     },
     "browser_style": true,
     "show_matches": [
@@ -37,16 +38,16 @@
   },
 
   "icons": {
-    "16": "icon/youtube-rss-finder-16.png",
-    "24": "icon/youtube-rss-finder-24.png",
-    "32": "icon/youtube-rss-finder-32.png",
-    "48": "icon/youtube-rss-finder-48.png",
-    "64": "icon/youtube-rss-finder-64.png",
-    "96": "icon/youtube-rss-finder-96.png",
-    "128": "icon/youtube-rss-finder-128.png",
-    "256": "icon/youtube-rss-finder-256.png",
-    "512": "icon/youtube-rss-finder-512.png",
-    "1024": "icon/youtube-rss-finder-1024.png"
+    "16": "icons/logo/youtube-rss-finder-16.png",
+    "24": "icons/logo/youtube-rss-finder-24.png",
+    "32": "icons/logo/youtube-rss-finder-32.png",
+    "48": "icons/logo/youtube-rss-finder-48.png",
+    "64": "icons/logo/youtube-rss-finder-64.png",
+    "96": "icons/logo/youtube-rss-finder-96.png",
+    "128": "icons/logo/youtube-rss-finder-128.png",
+    "256": "icons/logo/youtube-rss-finder-256.png",
+    "512": "icons/logo/youtube-rss-finder-512.png",
+    "1024": "icons/logo/youtube-rss-finder-1024.png"
   },
 
   "background": {
