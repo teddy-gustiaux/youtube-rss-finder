@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "YouTube RSS Finder",
   "author": "Teddy Gustiaux",
-  "version": "1.1.0",
+  "version": "1.2.0",
 
   "description": "Helps you find the RSS feed of a YouTube channel.",
   "homepage_url": "https://github.com/teddy-gustiaux/youtube-rss-finder",

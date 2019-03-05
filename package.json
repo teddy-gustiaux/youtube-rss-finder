@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "youtube-rss-finder",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Helps you find the RSS feed of a YouTube channel.",
   "main": "background.js",
   "directories": {
