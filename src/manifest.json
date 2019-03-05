@@ -10,6 +10,7 @@
   "default_locale": "en",
 
   "permissions": [
+    "https://www.youtube.com/*",
     "activeTab",
     "tabs",
     "notifications"
@@ -29,12 +30,7 @@
       "512": "icons/logo/youtube-rss-finder-512.png",
       "1024": "icons/logo/youtube-rss-finder-1024.png"
     },
-    "browser_style": true,
-    "show_matches": [
-      "https://www.youtube.com/channel/*",
-      "https://www.youtube.com/user/*",
-      "https://www.youtube.com/watch*"
-    ]
+    "browser_style": true
   },
 
   "icons": {
@@ -51,7 +47,11 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background/Utils.js",
+      "background/ChannelFeedBuilder.js",
+      "background/background.js"
+    ]
   },
 
   "applications": {
