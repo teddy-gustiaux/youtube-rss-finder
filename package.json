@@ -1,14 +1,14 @@
 {
   "private": true,
   "name": "youtube-rss-finder",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Helps you find the RSS feed of a YouTube channel.",
   "main": "background.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --config .eslintrc.json",
     "lint:src": "eslint --config .eslintrc.json src/**/*.js",
     "lint:test": "eslint --config .eslintrc.json test/**/*.js",
@@ -36,14 +36,13 @@
   },
   "homepage": "https://github.com/teddy-gustiaux/youtube-rss-finder#readme",
   "devDependencies": {
-    "conventional-changelog-cli": "^2.0.11",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.0.0",
-    "eslint-config-prettier": "^3.2.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-prettier": "^3.0.0",
-    "mocha": "^5.2.0",
-    "prettier": "^1.15.2",
-    "web-ext": "^2.7.0"
+    "conventional-changelog-cli": "2.0.12",
+    "eslint": "5.15.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-config-prettier": "4.1.0",
+    "eslint-plugin-import": "2.16.0",
+    "eslint-plugin-prettier": "3.0.1",
+    "prettier": "1.16.4",
+    "web-ext": "3.0.0"
   }
 }
