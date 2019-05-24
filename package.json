@@ -37,7 +37,7 @@
   "homepage": "https://github.com/teddy-gustiaux/youtube-rss-finder#readme",
   "devDependencies": {
     "conventional-changelog-cli": "2.0.21",
-    "eslint": "5.15.0",
+    "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-config-prettier": "4.3.0",
     "eslint-plugin-import": "2.17.2",
