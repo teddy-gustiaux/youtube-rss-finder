@@ -1,8 +1,11 @@
 {
-    "pageActionTitle": {
-      "message": "Afficher le flux RSS de cette chaîne"
+    "manifest_extension_description": {
+        "message": "Vous aide à trouver le flux RSS d'une chaîne YouTube."
     },
-    "feedRetrievalError": {
-      "message": "Le flux RSS de cette chaîne n'a pas pu être trouvé."
+    "page_action_title": {
+        "message": "Afficher le flux RSS de cette chaîne"
+    },
+    "notification_feed_retrieval_error": {
+        "message": "Le flux RSS de cette chaîne n'a pas pu être trouvé."
     }
 }
