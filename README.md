@@ -5,7 +5,7 @@
 [![GitHub release](https://img.shields.io/github/release/teddy-gustiaux/youtube-rss-finder.svg?style=flat-square)](https://github.com/teddy-gustiaux/youtube-rss-finder/releases)
 [![License](https://img.shields.io/badge/License-MIT-lightrey.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-**WebExtension helping you find the RSS feed of a YouTube channel.**
+**WebExtension helping you find the RSS feed of a YouTube channel or playlist.**
 
 
 <a href="https://addons.mozilla.org/en-US/firefox/addon/youtube-rss-finder/">
@@ -14,11 +14,11 @@
 
 ### Features
 
-Ever tried to find the RSS feed of a YouTube channel? It can be painful.
+Ever tried to find the RSS feed of a YouTube channel or playlist? It can be painful.
 
-This add-on automatically finds the RSS feed of any YouTube channel for you. It works anywhere on a channel, even when you are watching a video!
+This add-on automatically finds the RSS feed of any YouTube channel or playlist for you. It works anywhere on a channel, even when you are watching a video!
 
-When a channel RSS feed is found, the add-on will display its icon in the address bar. Simply click on it and the RSS feed will be opened in a new tab!
+When an RSS feed is found, the add-on will display its icon in the address bar. Simply click on it and the RSS feed will be opened in a new tab!
 
 *Page action icon:*
 
