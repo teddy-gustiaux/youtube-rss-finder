@@ -28,10 +28,10 @@ async function retrieveFeed(tabId, urlString) {
     if (url === null) return;
 
     Utils.debug(`Trying to retrieve the feed for the current page [${urlString}]`);
-    const feedBuilder = new ChannelFeedBuilder(tabId, url);
-    const feed = (await feedBuilder.getChannelAddress())
-        .buildChannelIdentifier()
-        .buildChannelFeed();
+    const feedBuilder = new FeedBuilder(tabId, url);
+    const feed = (await feedBuilder.getContentAddress())
+        .buildContentIdentifier()
+        .buildContentFeed();
 
     if (!Utils.isValidURL(feed)) {
         rssFeed = null;

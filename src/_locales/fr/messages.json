@@ -1,6 +1,6 @@
 {
     "manifest_extension_description": {
-        "message": "Vous aide à trouver le flux RSS d'une chaîne YouTube."
+        "message": "Vous aide à trouver le flux RSS d'une chaîne ou d'une playlist YouTube."
     },
     "page_action_title": {
         "message": "Afficher le flux RSS de cette chaîne"

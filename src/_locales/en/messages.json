@@ -1,6 +1,6 @@
 {
     "manifest_extension_description": {
-        "message": "Helps you find the RSS feed of a YouTube channel."
+        "message": "Helps you find the RSS feed of a YouTube channel or playlist."
     },
     "page_action_title": {
       "message": "Display the RSS feed of this channel"
