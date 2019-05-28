@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+os:
+  - linux
+  - osx
+
+node_js:
+  - "stable"
+
+script:
+  - npm run lint:all
+  - npm run test:all
+  - npm run build:lint
