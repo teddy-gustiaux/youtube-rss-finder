@@ -93,6 +93,7 @@ class FeedBuilder {
     buildContentIdentifier() {
         const parts = this.contentAddress !== null ? this.contentAddress.pathname.split('/') : [];
         const firstPathnamePart = parts.length >= 2 ? parts[1] : '';
+        let playlistId = null;
         switch (firstPathnamePart) {
             case 'channel':
                 this.identifier = `channel_id=${parts[2]}`;
@@ -101,7 +102,7 @@ class FeedBuilder {
                 this.identifier = `user=${parts[2]}`;
                 break;
             case 'playlist':
-                const playlistId = new URLSearchParams(this.currentUrl.search).get('list');
+                playlistId = new URLSearchParams(this.currentUrl.search).get('list');
                 this.identifier = playlistId === null ? null : `playlist_id=${playlistId}`;
                 break;
             default:
