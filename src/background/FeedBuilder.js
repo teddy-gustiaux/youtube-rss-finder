@@ -73,7 +73,6 @@ class FeedBuilder {
             case 'watch':
                 this.contentAddress = await FeedBuilder.getChannelAddressfromDOM();
                 break;
-                break;
             case 'playlist':
                 this.contentAddress = this.currentUrl;
                 break;
