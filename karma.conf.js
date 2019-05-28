@@ -34,6 +34,7 @@ module.exports = config => {
             'test/polyfills.js',
             // Sources
             { pattern: 'src/background/**/*.js', included: true },
+            'src/content-scripts/utils.js',
             // Test files
             { pattern: 'test/**/*.test.js', included: true },
         ],
