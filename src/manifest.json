@@ -54,6 +54,13 @@
     ]
   },
 
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content-scripts/utils.js"]
+    }
+  ],
+
   "applications": {
     "gecko": {
       "id": "youtube-rss-finder@gustiaux.com",
