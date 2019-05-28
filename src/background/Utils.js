@@ -1,9 +1,9 @@
 /**
- * A class containing various utility functions.
+ * Class containing various utility functions.
  */
 class Utils {
     /**
-     * Log a debug message or payload to the console (if debug is enabled only).
+     * Log a debug message or payload to the console (only if debug is enabled).
      * @param {*} payload The message string or payload to log to the console
      */
     static debug(payload) {
