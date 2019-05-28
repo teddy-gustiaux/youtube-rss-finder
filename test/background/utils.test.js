@@ -1,5 +1,8 @@
 const browser = chrome;
 
+// Disable the console warning for this file only, as it is used a lot here for the debugging tests
+/* eslint no-console: 0 */
+
 describe('Background utilities', () => {
     let sandbox;
 
@@ -69,7 +72,9 @@ describe('Background utilities', () => {
             expect(Utils.buildUrlObject('file:///index.html')).to.be.an.instanceOf(URL);
             expect(Utils.buildUrlObject('ftp://ftp.example.com')).to.be.an.instanceOf(URL);
             expect(Utils.buildUrlObject('about:blank')).to.be.an.instanceOf(URL);
-            expect(Utils.buildUrlObject('moz-extension://id/options.html')).to.be.an.instanceOf(URL);
+            expect(Utils.buildUrlObject('moz-extension://id/options.html')).to.be.an.instanceOf(
+                URL,
+            );
         });
 
         it('should return null if the URL is not valid', () => {
@@ -82,7 +87,6 @@ describe('Background utilities', () => {
             expect(Utils.buildUrlObject('randomstring')).to.be.equal(null);
         });
     });
-
 
     describe('A method to check if an HTTP-based URL is valid', () => {
         it('should return true if the URL is valid', () => {
