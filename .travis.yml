@@ -10,6 +10,9 @@ os:
 node_js:
   - "stable"
 
+addons:
+  firefox: "latest"
+
 script:
   - npm run lint:all
   - npm run test:all
