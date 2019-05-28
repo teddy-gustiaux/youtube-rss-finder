@@ -14,7 +14,7 @@
     "lint": "eslint --config .eslintrc.json",
     "lint:src": "eslint --config .eslintrc.json src/**/*.js",
     "lint:test": "eslint --config .eslintrc.json test/**/*.js",
-    "lint:all": "eslint --config .eslintrc.json **/*.js",
+    "lint:all": "eslint --config .eslintrc.json . --ext .js",
     "fix": "eslint --config .eslintrc.json --fix",
     "fix:src": "eslint --config .eslintrc.json src/**/*.js --fix",
     "fix:test": "eslint --config .eslintrc.json test/**/*.js --fix",

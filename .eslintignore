@@ -1,2 +1,6 @@
 icon
 node_modules
+dist
+karma
+coverage
+assets

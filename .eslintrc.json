@@ -11,10 +11,12 @@
     "es6": true,
     "browser": true,
     "webextensions": true,
-    "mocha": true 
+    "mocha": true
   },
   "rules": {
     "linebreak-style": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
     "prettier/prettier": "error"
   }
 }
