@@ -20,8 +20,10 @@ class EventManager {
      * Show the page action to the user if it exists, and hide it if does not.
      * @param {number} tabId The ID of the current tab
      * @param {URL} url An instance of the URL object for the current tab address
+     * @param {number} [delay=1000] Minimum time to wait before trying to retrieve the feed
+     * @returns {Promise<boolean>} `true` if the feed retrieval succeeded, `false` otherwise
      */
-    async _retrieveFeed(tabId, urlString) {
+    async _retrieveFeed(tabId, urlString, delay = 1000) {
         /**
          * As per the manifest, the page action icon is only shown on YouTube domain.
          * So, we only have to hide it if we are on YouTube, before trying to retrieve a feed.
@@ -29,21 +31,24 @@ class EventManager {
         browser.pageAction.hide(tabId);
         this.rssFeed = null;
         const url = Utils.buildUrlObject(urlString);
-        if (url === null) return;
+        if (url === null) return false;
 
         Utils.debug(`Trying to retrieve the feed for the current page [${urlString}]`);
-        const feedBuilder = new FeedBuilder(tabId, url);
-        await feedBuilder.getContentAddress();
-        const feed = feedBuilder.buildContentIdentifier().buildContentFeed();
+        return Utils.delay(delay).then(async () => {
+            const feedBuilder = new FeedBuilder(tabId, url);
+            await feedBuilder.getContentAddress();
+            const feed = feedBuilder.buildContentIdentifier().buildContentFeed();
 
-        if (!Utils.isValidURL(feed)) {
-            Utils.debug(`Feed is invalid - determined as [${feed}]`);
-            return;
-        }
+            if (!Utils.isValidURL(feed)) {
+                Utils.debug(`Feed is invalid - determined as [${feed}]`);
+                return false;
+            }
 
-        Utils.debug(`Feed has been determined as [${feed}]`);
-        this.rssFeed = feed;
-        browser.pageAction.show(tabId);
+            Utils.debug(`Feed has been determined as [${feed}]`);
+            this.rssFeed = feed;
+            browser.pageAction.show(tabId);
+            return true;
+        });
     }
 
     /**

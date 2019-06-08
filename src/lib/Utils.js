@@ -102,4 +102,14 @@ class Utils {
         Utils.debug(`Successfully located the canonical URL as [${canonicalLink.href}]`);
         return canonicalLink.href;
     }
+
+    /**
+     * Get a promise that will resolve after the provided duration.
+     * @param {number} ms Minimum time in milliseconds to wait before resolving the promise
+     * @returns {Promise<void>} TOOD
+     * @async
+     */
+    static delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
