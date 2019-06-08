@@ -30,11 +30,8 @@ module.exports = config => {
             'node_modules/sinon-chrome/bundle/sinon-chrome.min.js',
             // Browser polyfill for Chrome (must be included after sinon and sinon-chrome)
             'node_modules/webextension-polyfill/dist/browser-polyfill.js',
-            // Missing custom polyfills
-            'test/polyfills.js',
             // Sources
-            { pattern: 'src/background/**/*.js', included: true },
-            'src/content-scripts/utils.js',
+            { pattern: 'src/lib/**/*.js', included: true },
             // Test files
             { pattern: 'test/**/*.test.js', included: true },
         ],
