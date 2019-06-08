@@ -12,22 +12,43 @@ class FeedBuilder {
      */
     constructor(tabId, url) {
         /** @type {number} The ID of the current tab */
-        this.tabId = tabId;
+        this._tabId = tabId;
         /** @type {URL} The URL of the current page */
-        this.currentUrl = url;
+        this._currentUrl = url;
         /** @type {?URL} The URL of the channel or the playlist */
-        this.contentAddress = null;
-        /** @type {?string} The unique identifier of the channel (legacy user ID or channel ID) or the playlist */
-        this.identifier = null;
+        this._contentAddress = null;
+        /** @type {?string} The unique identifier of the channel or the playlist */
+        this._identifier = null;
+    }
+
+    /** @type {?URL} The URL of the channel or the playlist */
+    get contentAddress() {
+        return this._contentAddress;
+    }
+
+    /** @type {?string} The URL of the channel or the playlist */
+    set contentAddress(address) {
+        this._contentAddress = Utils.buildUrlObject(address);
+    }
+
+    /** @type {?string} The unique identifier of the channel or the playlist */
+    get identifier() {
+        return this._identifier;
+    }
+
+    /** @type {?string} The unique identifier of the channel or the playlist */
+    set identifier(identifier) {
+        this._identifier = identifier;
     }
 
     /**
      * Execute a content script and return the result as an URL object.
      * @param {string} file Path to the content script file to be executed
      * @returns {?URL} URL object created from the content script result or `null` in case of error
+     * @see {@link https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/executeScript `tabs.executeScript()` API definition}
      */
-    static async executeContentScript(file) {
-        const scriptResults = await browser.tabs.executeScript(this.tabId, {
+    async executeContentScript(file) {
+        const scriptResults = await browser.tabs.executeScript(this._tabId, {
             file,
             runAt: 'document_idle',
         });
@@ -39,9 +60,9 @@ class FeedBuilder {
      * The address channel can be based on the legacy user ID or the channel ID.
      * @returns {?URL} URL object representing the channel address or `null` in case of error
      */
-    static async getChannelAddressfromDOM() {
+    async getChannelAddressfromDOM() {
         Utils.debug('Requesting the channel address from the DOM');
-        return FeedBuilder.executeContentScript('/content-scripts/get-channel-url.js');
+        return this.executeContentScript('/content-scripts/get-channel-url.js');
     }
 
     /**
@@ -49,39 +70,40 @@ class FeedBuilder {
      * The canonical address is always based on the channel ID.
      * @returns {?URL} URL object representing the channel address or `null` in case of error
      */
-    static async getCanonicalAddressfromDOM() {
+    async getCanonicalAddressfromDOM() {
         Utils.debug('Requesting the canonical address from the DOM');
-        return FeedBuilder.executeContentScript('/content-scripts/get-canonical-url.js');
+        return this.executeContentScript('/content-scripts/get-canonical-url.js');
     }
 
     /**
      * Retrieve the address of the channel or playlist of the current page,
      * and set the associated property.
      * If an error happened, the internal property will be set to `null`.
-     * @returns {FeedBuilder} Instance of the class, in order to chain methods
+     * @returns {void}
      */
     async getContentAddress() {
-        const parts = this.currentUrl.pathname.split('/');
-        const firstPathnamePart = parts.length >= 2 ? parts[1] : '';
-        switch (firstPathnamePart) {
+        const pathnameParts = this._currentUrl.pathname.split('/');
+        switch (pathnameParts[1]) {
             case 'user':
-                this.contentAddress = this.currentUrl;
+                this._contentAddress = this._currentUrl;
                 break;
             case 'channel':
-                this.contentAddress = this.currentUrl;
+                this._contentAddress = this._currentUrl;
                 break;
             case 'watch':
-                this.contentAddress = await FeedBuilder.getChannelAddressfromDOM();
+                this._contentAddress = await this.getChannelAddressfromDOM();
                 break;
             case 'playlist':
-                this.contentAddress = this.currentUrl;
+                this._contentAddress = this._currentUrl;
+                break;
+            case 'c':
+                this._contentAddress = await this.getCanonicalAddressfromDOM();
                 break;
             default:
-                this.contentAddress = await FeedBuilder.getCanonicalAddressfromDOM();
+                this._contentAddress = await this.getCanonicalAddressfromDOM();
                 break;
         }
-        Utils.debug(`Content address set to [${this.contentAddress}]`);
-        return this;
+        Utils.debug(`Content address set to [${this._contentAddress}]`);
     }
 
     /**
@@ -91,25 +113,25 @@ class FeedBuilder {
      * @returns {FeedBuilder} Instance of the class, in order to chain methods
      */
     buildContentIdentifier() {
-        const parts = this.contentAddress !== null ? this.contentAddress.pathname.split('/') : [];
+        const parts = this._contentAddress !== null ? this._contentAddress.pathname.split('/') : [];
         const firstPathnamePart = parts.length >= 2 ? parts[1] : '';
         let playlistId = null;
         switch (firstPathnamePart) {
             case 'channel':
-                this.identifier = `channel_id=${parts[2]}`;
+                this._identifier = `channel_id=${parts[2]}`;
                 break;
             case 'user':
-                this.identifier = `user=${parts[2]}`;
+                this._identifier = `user=${parts[2]}`;
                 break;
             case 'playlist':
-                playlistId = new URLSearchParams(this.currentUrl.search).get('list');
-                this.identifier = playlistId === null ? null : `playlist_id=${playlistId}`;
+                playlistId = new URLSearchParams(this._currentUrl.search).get('list');
+                this._identifier = `playlist_id=${playlistId}`;
                 break;
             default:
-                this.identifier = null;
+                this._identifier = null;
                 break;
         }
-        Utils.debug(`Content identifier set to [${this.identifier}]`);
+        Utils.debug(`Content identifier set to [${this._identifier}]`);
         return this;
     }
 
@@ -118,8 +140,8 @@ class FeedBuilder {
      * @returns {?string} The channel or playlist RSS feed, or `null` if an error happened
      */
     buildContentFeed() {
-        return this.identifier !== null
-            ? `https://www.youtube.com/feeds/videos.xml?${this.identifier}`
+        return this._identifier !== null
+            ? `https://www.youtube.com/feeds/videos.xml?${this._identifier}`
             : null;
     }
 }

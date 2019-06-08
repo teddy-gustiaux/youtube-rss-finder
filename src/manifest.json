@@ -48,8 +48,9 @@
 
   "background": {
     "scripts": [
-      "background/Utils.js",
-      "background/FeedBuilder.js",
+      "lib/Utils.js",
+      "lib/FeedBuilder.js",
+      "lib/EventManager.js",
       "background/background.js"
     ]
   },
@@ -57,7 +58,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/*"],
-      "js": ["content-scripts/utils.js"]
+      "js": ["lib/Utils.js"]
     }
   ],
 
