@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Additionally, the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/) format is respected and used to generate the [conventional changelog](https://github.com/conventional-changelog/conventional-changelog).
 
+# [1.3.0](https://github.com/teddy-gustiaux/youtube-rss-finder/compare/v1.2.0...v1.3.0) (2019-06-11)
+
+### Features
+
+* add support for playlists ([71ce110](https://github.com/teddy-gustiaux/youtube-rss-finder/commit/71ce110))
+
+### Bug Fixes
+
+* intermittent failures to retrieve feed in new layout ([f16d787](https://github.com/teddy-gustiaux/youtube-rss-finder/commit/f16d787))
+
 # [1.2.0](https://github.com/teddy-gustiaux/youtube-rss-finder/compare/v1.1.0...v1.2.0) (2019-03-05)
 
 ### Features
