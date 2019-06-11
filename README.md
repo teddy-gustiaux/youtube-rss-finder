@@ -4,6 +4,7 @@
 [![Mozilla Add-on](https://img.shields.io/amo/rating/youtube-rss-finder.svg)](https://addons.mozilla.org/en-US/firefox/addon/youtube-rss-finder/)
 [![GitHub release](https://img.shields.io/github/release/teddy-gustiaux/youtube-rss-finder.svg)](https://github.com/teddy-gustiaux/youtube-rss-finder/releases)
 [![Build Status](https://travis-ci.com/teddy-gustiaux/youtube-rss-finder.svg?branch=master)](https://travis-ci.com/teddy-gustiaux/youtube-rss-finder)
+[![Code Coverage](https://img.shields.io/codecov/c/github/teddy-gustiaux/youtube-rss-finder.svg)](https://codecov.io/gh/teddy-gustiaux/youtube-rss-finder)
 [![License](https://img.shields.io/badge/License-MIT-lightrey.svg)](https://opensource.org/licenses/MIT)
 
 **WebExtension helping you find the RSS feed of a YouTube channel or playlist.**
