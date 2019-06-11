@@ -13,7 +13,11 @@ node_js:
 addons:
   firefox: "latest"
 
+install:
+  - npm install -g codecov
+
 script:
   - npm run lint:all
   - npm run test:all
   - npm run build:lint
+  - codecov

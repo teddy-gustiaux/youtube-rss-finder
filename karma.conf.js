@@ -82,8 +82,9 @@ module.exports = config => {
             type: 'text',
             includeAllSources: true,
             reporters: [
-                { type: 'html', subdir: 'report-html', includeAllSources: true },
-                { type: 'text', subdir: 'report-text', includeAllSources: true },
+                { type: 'html', subdir: 'report-html' },
+                { type: 'text', subdir: 'report-text' },
+                { type: 'lcovonly', subdir: 'report-lcov' },
             ],
         },
         // web server port
