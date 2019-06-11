@@ -29,3 +29,4 @@ All URLs are given as examples.
 ### Common tests
 
 - Navigate from one channel or playlist to other ones, and check the feed found is indeed the one from the newly accessed channel or playlist.
+- Switch active tab and window, and return to a test page to check the feed is still correct (from either a non-YouTube URL or a YouTube URL).
