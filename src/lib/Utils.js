@@ -106,7 +106,7 @@ class Utils {
     /**
      * Get a promise that will resolve after the provided duration.
      * @param {number} ms Minimum time in milliseconds to wait before resolving the promise
-     * @returns {Promise<void>} TOOD
+     * @returns {Promise<void>}
      * @async
      */
     static delay(ms) {
