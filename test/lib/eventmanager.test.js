@@ -1,5 +1,3 @@
-const browser = chrome;
-
 describe('Event manager', () => {
     let sandbox;
 

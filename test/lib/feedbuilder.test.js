@@ -1,5 +1,3 @@
-const browser = chrome;
-
 describe('Feed builder', () => {
     let sandbox;
     const tabId = 42;

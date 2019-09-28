@@ -1,5 +1,3 @@
-const browser = chrome;
-
 // Disable the console warning for this file only, as it is used a lot here for the debugging tests
 /* eslint no-console: 0 */
 
