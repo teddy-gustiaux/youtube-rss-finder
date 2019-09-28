@@ -173,7 +173,7 @@ describe('Utilities', () => {
             const start = new Date();
             await Utils.delay(100);
             const end = new Date();
-            return expect(end.getTime() - start.getTime()).to.be.at.least(100);
+            expect(end.getTime() - start.getTime()).to.be.at.least(100);
         });
     });
 });

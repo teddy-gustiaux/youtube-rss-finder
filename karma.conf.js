@@ -57,7 +57,7 @@ module.exports = config => {
                 presets: ['@babel/preset-env'],
                 sourceMap: 'inline',
                 // require: https://github.com/istanbuljs/babel-plugin-istanbul
-                plugins: ['istanbul'],
+                plugins: ['@babel/plugin-transform-async-to-generator', 'istanbul'],
             },
             filename(file) {
                 return file.originalPath;
