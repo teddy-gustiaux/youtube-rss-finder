@@ -28,6 +28,8 @@ module.exports = config => {
             // Dependencies
             'node_modules/sinon/pkg/sinon.js',
             'node_modules/sinon-chrome/bundle/sinon-chrome.min.js',
+            // Test file setup (must be included before the browser polyfill for Chrome)
+            'test/setup.js',
             // Browser polyfill for Chrome (must be included after sinon and sinon-chrome)
             'node_modules/webextension-polyfill/dist/browser-polyfill.js',
             // Sources
