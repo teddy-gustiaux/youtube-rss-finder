@@ -170,10 +170,10 @@ describe('Utilities', () => {
         });
 
         it('should not return before the specified time', async () => {
-            const start = new Date();
+            const start = performance.now();
             await Utils.delay(100);
-            const end = new Date();
-            expect(end.getTime() - start.getTime()).to.be.at.least(100);
+            const end = performance.now();
+            expect(end - start).to.be.at.least(100);
         });
     });
 });
