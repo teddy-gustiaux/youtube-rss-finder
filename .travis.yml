@@ -7,14 +7,11 @@ os:
   - linux
   - osx
 
-node_js:
-  - "stable"
-
 addons:
   firefox: "latest"
 
 script:
   - npm run lint:all
-  - npm run test:all
+  - travis_retry npm run test:all
   - npm run build:lint
   - npm run codecov
