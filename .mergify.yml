@@ -1,7 +1,7 @@
 pull_request_rules:
     - name: Automatic merge of development dependencies update
       conditions:
-          - base=master
+          - base=develop
           - author=dependabot-preview[bot]
           - title~=build(deps-dev)*
           - status-success~=LGTM analysis
