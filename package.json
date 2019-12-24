@@ -67,7 +67,7 @@
     "nyc": "15.0.0",
     "prettier": "1.19.1",
     "sinon": "7.5.0",
-    "sinon-chai": "3.3.0",
+    "sinon-chai": "3.4.0",
     "sinon-chrome": "3.0.1",
     "web-ext": "3.2.1",
     "webextension-polyfill": "0.6.0"
