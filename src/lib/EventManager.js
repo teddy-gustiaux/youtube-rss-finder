@@ -87,7 +87,7 @@ class EventManager {
             browser.notifications.create('', {
                 type: 'basic',
                 title: browser.runtime.getManifest().name,
-                message: browser.i18n.getMessage('feedRetrievalError'),
+                message: browser.i18n.getMessage('notification_feed_retrieval_error'),
                 iconUrl: browser.extension.getURL('icons/error/error-96.png'),
             });
         }
