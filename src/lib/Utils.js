@@ -62,6 +62,7 @@ class Utils {
     static getChannelSelectors() {
         return [
             '.ytp-ce-channel-title.ytp-ce-link', // New layout (faster - test)
+            'yt-formatted-string#text :first-child', // New layout
             'yt-formatted-string#owner-name :first-child', // New layout
             '.yt-user-info :first-child', // Old layout
         ];
