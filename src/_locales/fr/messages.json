@@ -1,11 +1,14 @@
 {
-    "manifest_extension_description": {
-        "message": "Vous aide à trouver le flux RSS d'une chaîne ou d'une playlist YouTube."
-    },
-    "page_action_title": {
-        "message": "Afficher le flux RSS de cette chaîne"
-    },
-    "notification_feed_retrieval_error": {
-        "message": "Le flux RSS de cette chaîne n'a pas pu être trouvé."
-    }
+  "manifest_extension_description": {
+    "message": "Vous aide à trouver le flux RSS d'une chaîne ou d'une playlist YouTube."
+  },
+  "page_action_title_success": {
+    "message": "Afficher le flux RSS de cette chaîne ou playlist"
+  },
+  "page_action_title_pending": {
+    "message": "Tente de déterminer le flux RSS de cette chaîne ou playlist..."
+  },
+  "notification_feed_retrieval_error": {
+    "message": "Le flux RSS de cette chaîne ou playlist n'a pas pu être trouvé."
+  }
 }

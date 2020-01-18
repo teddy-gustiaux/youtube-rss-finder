@@ -78,7 +78,7 @@ describe('Feed builder', () => {
             expect(feedBuilder.contentAddress).to.be.equal(legacyUsernameChannelAddress);
         });
 
-        it('should set the proper content URL when at a username-based URL', async () => {
+        it('should set the proper content URL when at a legacy username-based URL', async () => {
             const legacyUsernameChannelAbout = new URL('https://www.youtube.com/user/123/about');
             const feedBuilder = new FeedBuilder(tabId, legacyUsernameChannelAbout);
 

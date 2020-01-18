@@ -17,7 +17,7 @@
   ],
 
   "page_action": {
-    "default_title": "__MSG_page_action_title__",
+    "default_title": "__MSG_page_action_title_pending__",
     "default_icon": {
       "16": "icons/logo/youtube-rss-finder-16.png",
       "24": "icons/logo/youtube-rss-finder-24.png",
@@ -49,6 +49,7 @@
   "background": {
     "scripts": [
       "lib/Utils.js",
+      "lib/PageAction.js",
       "lib/FeedBuilder.js",
       "lib/EventManager.js",
       "background/background.js"

@@ -16,20 +16,40 @@ class EventManager {
     }
 
     /**
+     * Set the initial state before doing anything else.
+     * @param {number} tabId The ID of the current tab
+     * @param {URL} urlString An instance of the URL object for the current tab address
+     */
+    async _setInitialState(tabId, urlString) {
+        Utils.debug('Hiding icon');
+        await PageAction.hide(tabId);
+        this.rssFeed = null;
+
+        const knownSupportedUrls = [
+            'https://www.youtube.com/channel/',
+            'https://www.youtube.com/watch?',
+            'https://www.youtube.com/user/',
+            'https://www.youtube.com/c/',
+            'https://www.youtube.com/playlist?',
+        ];
+        const knownSupportedUrl = knownSupportedUrls.some(url => {
+            return urlString.substring(0, url.length) === url;
+        });
+        if (knownSupportedUrl === true) {
+            Utils.debug('Address is supported - Showing disabled icon');
+            await PageAction.pending(tabId);
+        }
+    }
+
+    /**
      * Try to retrieve the RSS feed of the current YouTube page.
      * Show the page action to the user if it exists, and hide it if does not.
      * @param {number} tabId The ID of the current tab
-     * @param {URL} url An instance of the URL object for the current tab address
+     * @param {URL} urlString An instance of the URL object for the current tab address
      * @param {number} [delay=1000] Minimum time to wait before trying to retrieve the feed
      * @returns {Promise<boolean>} `true` if the feed retrieval succeeded, `false` otherwise
      */
     async _retrieveFeed(tabId, urlString, delay = 1000) {
-        /**
-         * As per the manifest, the page action icon is only shown on YouTube domain.
-         * So, we only have to hide it if we are on YouTube, before trying to retrieve a feed.
-         */
-        browser.pageAction.hide(tabId);
-        this.rssFeed = null;
         const url = Utils.buildUrlObject(urlString);
         if (url === null) return false;
 
@@ -40,13 +60,14 @@ class EventManager {
             const feed = feedBuilder.buildContentIdentifier().buildContentFeed();
 
             if (!Utils.isValidURL(feed)) {
-                Utils.debug(`Feed is invalid - determined as [${feed}]`);
+                Utils.debug(`Feed is invalid - determined as [${feed}] - Hiding icon`);
+                await PageAction.hide(tabId);
                 return false;
             }
 
-            Utils.debug(`Feed has been determined as [${feed}]`);
+            Utils.debug(`Feed has been determined as [${feed}] - Showing enabled icon`);
             this.rssFeed = feed;
-            browser.pageAction.show(tabId);
+            await PageAction.success(tabId);
             return true;
         });
     }
@@ -67,6 +88,7 @@ class EventManager {
         if (tabs.length === 0) return;
         if (windowId !== null && tabs[0].windowId !== windowId) return;
         if (tabId !== null && tabs[0].id !== tabId) return;
+        await this._setInitialState(tabs[0].id, tabs[0].url);
         await this._retrieveFeed(tabs[0].id, tabs[0].url);
     }
 

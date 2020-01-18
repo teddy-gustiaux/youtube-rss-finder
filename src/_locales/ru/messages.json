@@ -1,11 +1,14 @@
 {
-    "manifest_extension_description": {
-        "message": "Helps you find the RSS feed of a YouTube channel or playlist."
-    },
-    "page_action_title": {
-      "message": "Просмотреть RSS ленту этого канала"
-    },
-    "notification_feed_retrieval_error": {
-      "message": "The RSS feed of this channel could not be found."
-    }
+  "manifest_extension_description": {
+    "message": "Helps you find the RSS feed of a YouTube channel or playlist."
+  },
+  "page_action_title_success": {
+    "message": "Просмотреть RSS ленту этого канала"
+  },
+  "page_action_title_pending": {
+    "message": "Trying to determine the RSS feed of this channel or playlist..."
+  },
+  "notification_feed_retrieval_error": {
+    "message": "The RSS feed of this channel or playlist could not be found."
+  }
 }

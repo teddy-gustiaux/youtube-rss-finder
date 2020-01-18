@@ -10,15 +10,75 @@ describe('Event manager', () => {
         browser.flush();
     });
 
-    describe('A method to try to retrieve the RSS feed of the current YouTube page', () => {
-        it('should hide the page action before trying to retrieve the feed', async () => {
+    describe('A method to set the initial state before doing any other actions', () => {
+        it('should hide the page action', async () => {
             const eventManager = new EventManager();
 
-            await eventManager._retrieveFeed(1, 'https://www.youtube.com/channel/123');
+            await eventManager._setInitialState(1, 'https://www.youtube.com');
 
             expect(browser.pageAction.hide).to.have.been.called();
         });
 
+        it('should set the initial state', async () => {
+            const eventManager = new EventManager();
+
+            await eventManager._setInitialState(1, 'https://www.youtube.com/channel/123');
+
+            expect(eventManager.rssFeed).to.equal(null);
+        });
+
+        it('should set the page action to pending state when at an ID-based channel URL', async () => {
+            const eventManager = new EventManager();
+            const spy = sandbox.spy(PageAction, 'pending');
+
+            await eventManager._setInitialState(1, 'https://www.youtube.com/channel/123');
+
+            expect(spy).to.have.been.called();
+            expect(browser.pageAction.show).to.have.been.called();
+        });
+
+        it('should set the page action to pending state when at a video URL', async () => {
+            const eventManager = new EventManager();
+            const spy = sandbox.spy(PageAction, 'pending');
+
+            await eventManager._setInitialState(1, 'https://www.youtube.com/watch?v=a1b2c3d5');
+
+            expect(spy).to.have.been.called();
+            expect(browser.pageAction.show).to.have.been.called();
+        });
+
+        it('should set the page action to pending state when at a legacy username-based channel URL', async () => {
+            const eventManager = new EventManager();
+            const spy = sandbox.spy(PageAction, 'pending');
+
+            await eventManager._setInitialState(1, 'https://www.youtube.com/user/123');
+
+            expect(spy).to.have.been.called();
+            expect(browser.pageAction.show).to.have.been.called();
+        });
+
+        it('should set the page action to pending state when at a custom channel URL', async () => {
+            const eventManager = new EventManager();
+            const spy = sandbox.spy(PageAction, 'pending');
+
+            await eventManager._setInitialState(1, 'https://www.youtube.com/c/creatoracademy');
+
+            expect(spy).to.have.been.called();
+            expect(browser.pageAction.show).to.have.been.called();
+        });
+
+        it('should set the page action to pending state when at a playlist URL', async () => {
+            const eventManager = new EventManager();
+            const spy = sandbox.spy(PageAction, 'pending');
+
+            await eventManager._setInitialState(1, 'https://www.youtube.com/playlist?list=e6f7g8');
+
+            expect(spy).to.have.been.called();
+            expect(browser.pageAction.show).to.have.been.called();
+        });
+    });
+
+    describe('A method to try to retrieve the RSS feed of the current YouTube page', () => {
         it('should do nothing if the current address is not a valid URL', async () => {
             const eventManager = new EventManager();
             const stub = sandbox.stub(Utils, 'delay');
@@ -68,12 +128,14 @@ describe('Event manager', () => {
 
         it('should show the page action if the feed retrieval succeeded', async () => {
             const eventManager = new EventManager();
-            const spy = sandbox.spy(Utils, 'delay');
+            const delaySpy = sandbox.spy(Utils, 'delay');
+            const iconSpy = sandbox.spy(PageAction, 'success');
             const address = 'https://www.youtube.com/channel/123';
 
             const res = await eventManager._retrieveFeed(1, address, 100);
 
-            expect(spy).to.have.been.called();
+            expect(delaySpy).to.have.been.called();
+            expect(iconSpy).to.have.been.called();
             expect(browser.pageAction.show).to.have.been.called();
             expect(res).to.be.equal(true);
         });
@@ -90,7 +152,7 @@ describe('Event manager', () => {
             expect(stub).to.not.have.been.called();
         });
 
-        it('should do nothing if the YouTube page is not from the specified window', async () => {
+        it('should do nothing if the YouTube page is not from the active window', async () => {
             const eventManager = new EventManager();
             browser.tabs.query.returns([{ id: 1, windowId: 2 }]);
             const stub = sandbox.stub(eventManager, '_retrieveFeed');
@@ -105,24 +167,26 @@ describe('Event manager', () => {
             browser.tabs.query.returns([{ id: 2, windowId: 1 }]);
             const stub = sandbox.stub(eventManager, '_retrieveFeed');
 
-            await eventManager._tabHasChanged(1, null);
+            await eventManager._tabHasChanged(1, 1);
 
             expect(stub).to.not.have.been.called();
         });
 
-        it('should try to retrieve a feed if the active tab is a YouTube page', async () => {
+        it('should set the initial state if the active tab is a YouTube page', async () => {
             const eventManager = new EventManager();
-            browser.tabs.query.returns([{ id: 1, windowId: null }]);
-            const stub = sandbox.stub(eventManager, '_retrieveFeed');
+            browser.tabs.query.returns([{ id: 1, windowId: 1 }]);
+            const stub = sandbox.stub(eventManager, '_setInitialState');
+            sandbox.stub(eventManager, '_retrieveFeed');
 
-            await eventManager._tabHasChanged(1, null);
+            await eventManager._tabHasChanged(1, 1);
 
             expect(stub).to.have.been.calledOnce();
         });
 
-        it('should try to retrieve a feed if the active tab/window is a YouTube page', async () => {
+        it('should try to retrieve a feed if the active tab is a YouTube page', async () => {
             const eventManager = new EventManager();
             browser.tabs.query.returns([{ id: 1, windowId: 1 }]);
+            sandbox.stub(eventManager, '_setInitialState');
             const stub = sandbox.stub(eventManager, '_retrieveFeed');
 
             await eventManager._tabHasChanged(1, 1);
@@ -159,7 +223,6 @@ describe('Event manager', () => {
             const eventManager = new EventManager();
             const stub = sandbox.stub(eventManager, '_tabHasChanged');
             const changeInfo = {
-                title: 'My channel',
                 status: 'complete',
             };
 
@@ -172,8 +235,7 @@ describe('Event manager', () => {
             const eventManager = new EventManager();
             const stub = sandbox.stub(eventManager, '_tabHasChanged');
             const changeInfo = {
-                title: 'YouTube',
-                status: 'complete',
+                status: 'loading',
             };
 
             await eventManager.onTabUpdated(1, changeInfo);
