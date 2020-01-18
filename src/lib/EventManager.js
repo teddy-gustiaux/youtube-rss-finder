@@ -103,12 +103,10 @@ class EventManager {
      */
     async onTabUpdated(tabId, changeInfo) {
         /**
-         * Only listening to changes in the `title` property, once the proper page title has been set.
-         * Before the page title is set, it will default to 'YouTube'
-         * Listening to `status` property changes (either `loading` or `complete`) will fail,
-         * as the content page script will be executed before the DOM has actually been updated.
+         * Only listening to changes in the `status` property.
+         * Waiting until the tab has finished loading (status `complete`).
          */
-        if (!changeInfo.title || changeInfo.title === 'YouTube') return;
+        if (changeInfo.status !== 'complete') return;
         Utils.debug(`Tab with ID [${tabId}] has been updated`);
         await this._tabHasChanged(tabId, null);
     }

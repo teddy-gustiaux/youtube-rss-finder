@@ -6,7 +6,7 @@ browser.runtime.getBrowserInfo().then(info => {
     if (mainVersion >= 61) {
         browser.tabs.onUpdated.addListener(eventManager.onTabUpdated, {
             urls: ['https://www.youtube.com/*'],
-            properties: ['title'],
+            properties: ['status'],
         });
     } else {
         browser.tabs.onUpdated.addListener(eventManager.onTabUpdated);
