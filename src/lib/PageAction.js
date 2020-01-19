@@ -64,7 +64,7 @@ class PageAction {
             browser.i18n.getMessage('page_action_title_pending'),
         );
         const setPageAction = browser.pageAction.show(tabId);
-        Promise.all([setIcon, setTitle, setPageAction]);
+        await Promise.all([setIcon, setTitle, setPageAction]);
     }
 
     /**
@@ -78,6 +78,6 @@ class PageAction {
             browser.i18n.getMessage('page_action_title_success'),
         );
         const setPageAction = browser.pageAction.show(tabId);
-        Promise.all([setIcon, setTitle, setPageAction]);
+        await Promise.all([setIcon, setTitle, setPageAction]);
     }
 }

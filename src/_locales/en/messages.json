@@ -8,6 +8,9 @@
   "page_action_title_pending": {
     "message": "Trying to determine the RSS feed of this channel or playlist..."
   },
+  "page_action_title_disabled": {
+    "message": "Disabled for this page"
+  },
   "notification_feed_retrieval_error": {
     "message": "The RSS feed of this channel or playlist could not be found."
   }

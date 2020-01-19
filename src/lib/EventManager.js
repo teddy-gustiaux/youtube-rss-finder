@@ -18,7 +18,7 @@ class EventManager {
     /**
      * Set the initial state before doing anything else.
      * @param {number} tabId The ID of the current tab
-     * @param {URL} urlString An instance of the URL object for the current tab address
+     * @param {URL} urlString The URL of the current tab
      */
     async _setInitialState(tabId, urlString) {
         Utils.debug('Hiding icon');
@@ -45,7 +45,7 @@ class EventManager {
      * Try to retrieve the RSS feed of the current YouTube page.
      * Show the page action to the user if it exists, and hide it if does not.
      * @param {number} tabId The ID of the current tab
-     * @param {URL} urlString An instance of the URL object for the current tab address
+     * @param {URL} urlString The URL of the current tab
      * @param {number} [delay=1000] Minimum time to wait before trying to retrieve the feed
      * @returns {Promise<boolean>} `true` if the feed retrieval succeeded, `false` otherwise
      */

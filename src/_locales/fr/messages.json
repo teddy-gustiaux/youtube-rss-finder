@@ -8,6 +8,9 @@
   "page_action_title_pending": {
     "message": "Tente de déterminer le flux RSS de cette chaîne ou playlist..."
   },
+  "page_action_title_disabled": {
+    "message": "Désactivé pour cette page"
+  },
   "notification_feed_retrieval_error": {
     "message": "Le flux RSS de cette chaîne ou playlist n'a pas pu être trouvé."
   }
