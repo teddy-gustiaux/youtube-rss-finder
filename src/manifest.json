@@ -17,18 +17,18 @@
   ],
 
   "page_action": {
-    "default_title": "__MSG_page_action_title_pending__",
+    "default_title": "__MSG_page_action_title_disabled__",
     "default_icon": {
-      "16": "icons/logo/youtube-rss-finder-16.png",
-      "24": "icons/logo/youtube-rss-finder-24.png",
-      "32": "icons/logo/youtube-rss-finder-32.png",
-      "48": "icons/logo/youtube-rss-finder-48.png",
-      "64": "icons/logo/youtube-rss-finder-64.png",
-      "96": "icons/logo/youtube-rss-finder-96.png",
-      "128": "icons/logo/youtube-rss-finder-128.png",
-      "256": "icons/logo/youtube-rss-finder-256.png",
-      "512": "icons/logo/youtube-rss-finder-512.png",
-      "1024": "icons/logo/youtube-rss-finder-1024.png"
+      "16": "icons/error/error-16.png",
+      "24": "icons/error/error-24.png",
+      "32": "icons/error/error-32.png",
+      "48": "icons/error/error-48.png",
+      "64": "icons/error/error-64.png",
+      "96": "icons/error/error-96.png",
+      "128": "icons/error/error-128.png",
+      "256": "icons/error/error-256.png",
+      "512": "icons/error/error-512.png",
+      "1024": "icons/error/error-1024.png"
     },
     "browser_style": true
   },
