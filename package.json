@@ -48,7 +48,7 @@
     "codecov": "3.7.0",
     "conventional-changelog-cli": "2.0.34",
     "dirty-chai": "2.0.1",
-    "eslint": "7.2.0",
+    "eslint": "7.3.0",
     "eslint-config-airbnb-base": "14.2.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.21.2",
