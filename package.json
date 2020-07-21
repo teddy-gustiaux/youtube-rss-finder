@@ -45,7 +45,7 @@
     "@babel/preset-env": "7.6.2",
     "babel-plugin-istanbul": "5.2.0",
     "chai": "4.2.0",
-    "codecov": "3.6.5",
+    "codecov": "3.7.1",
     "conventional-changelog-cli": "2.0.23",
     "dirty-chai": "2.0.1",
     "eslint": "6.5.1",
